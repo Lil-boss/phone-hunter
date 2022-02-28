@@ -5,18 +5,24 @@ const getApi = async () => {
     const URL = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     const res = await fetch(URL);
     const data = await res.json();
-    const result = data.data
-    getItem(result)
+    console.log(data);
+    const result = data.data;
+    console.log(result.slice(0, 20));
+    if (result.length === 20) {
+        const value = result.slice(0, 20);
+        getItem(value);
+    }    
 }
 
 const getItem = (result) => {
-    
+
     for (let data of result) {
-        console.log(data);
-        const cardContainer = document.getElementById('card-container');
-    const div = document.createElement('div');
-    div.innerHTML = `
-    <div class="flex justify-center">
+         
+           // console.log(data);
+            const cardContainer = document.getElementById('card-container');
+            const div = document.createElement('div');
+            div.innerHTML = `
+                    <div class="flex justify-center">
                         <div class="rounded-lg shadow-lg bg-white md:w-80">
                             <div class="mt-6  flex justify-center items-center">
                             <a href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light">
@@ -37,7 +43,8 @@ const getItem = (result) => {
                     </div>
     `;
 
-    cardContainer.appendChild(div);
+            cardContainer.appendChild(div);
+        
    }
 
     
