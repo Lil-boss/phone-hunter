@@ -12,7 +12,9 @@ const getApi = async () => {
         const URL = `https://openapi.programming-hero.com/api/phones?search=${search}`;
         searchText.value = ""
         const res = await fetch(URL);
-        if (res) {
+        if (!res) {
+            document.getElementById('spinner').style.display = "block"
+        } else {
             const data = await res.json();
             const result = data.data;
             if (result.length === 0) {
@@ -24,10 +26,7 @@ const getApi = async () => {
                 }
             }
             console.log(result.slice(0, 20));
-        } else {
-            document.getElementById('spinner').style.display = "block"
         }
-
 
     }
 
@@ -75,50 +74,50 @@ const getItem = (result) => {
 
 }
 
-const details = (info) => {
+const details = async (info) => {
     const URL = `https://openapi.programming-hero.com/api/phone/${info}`
-    fetch(URL)
-        .then(res => res.json())
-        .then(data => getDetails(data.data));
+    const res = await fetch(URL)
+    const data = await res.json()
+    getDetails(data.data)
+}
 
-    const getDetails = (id) => {
-        console.log(id)
-        document.getElementById('container').innerHTML = `
-        
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                     aria-labelledby="exampleModalLabel" aria-hidden="false">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                        
-                         <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">${id.name}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Brand:${id.brand}</p>
-                                        <p>Display:${id.mainFeatures.displaySize}</p>
-                                        <p>Memory:${id.mainFeatures.memory}</p>
-                                        <p>Storage:${id.mainFeatures.storage}</p>
-                                        <p>chip-Set:${id.mainFeatures.chipSet}</p>
-                                        <p>sensors:${id.mainFeatures.sensors.map(d => d)}</p>
-                                        <p>others:</p>
-                                        <p>Release-Date:</p>
-                                    </div>
-                        
-                         <div class="modal-footer">
-                                        <button type="button" class="btn bg-cyan-800 text-white hover:bg-cyan-600"
-                                            data-dismiss="modal">Close</button>
-                                    </div>
+const getDetails = (id) => {
+    console.log(id)
+    document.getElementById('container').innerHTML = `
+    
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="false">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                    
+                     <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">${id.name}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                            </div> 
-                    </div> 
-                            </div> 
-            `;
+                                <div class="modal-body">
+                                    <p>Brand:${id.brand}</p>
+                                    <p>Display:${id.mainFeatures.displaySize}</p>
+                                    <p>Memory:${id.mainFeatures.memory}</p>
+                                    <p>Storage:${id.mainFeatures.storage}</p>
+                                    <p>chip-Set:${id.mainFeatures.chipSet}</p>
+                                    <p>sensors:${id.mainFeatures.sensors.map(d => d)}</p>
+                                    <p>others:</p>
+                                    <p>Release-Date:</p>
+                                </div>
+                    
+                     <div class="modal-footer">
+                                    <button type="button" class="btn bg-cyan-800 text-white hover:bg-cyan-600"
+                                        data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div> 
+                </div> 
+                        </div> 
+        `;
 
 
-    }
 }
 
 
