@@ -1,5 +1,4 @@
 const getApi = async () => {
-    debugger
     document.getElementById('card-container').innerHTML = "";
     const searchText = document.getElementById('search-text');
     const search = searchText.value;
@@ -33,7 +32,6 @@ const getApi = async () => {
 }
 
 const getItem = (result) => {
-    debugger
     console.log(result)
 
     for (let data of result) {
