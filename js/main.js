@@ -7,7 +7,7 @@ const getApi = async () => {
         alert("Null value is not Allowed");
 
     } else {
-        document.getElementById('alert-msg').innerText = ""
+        document.getElementById('alert-box').style.display = "none";
         const URL = `https://openapi.programming-hero.com/api/phones?search=${search}`;
         searchText.value = ""
         const res = await fetch(URL);
@@ -16,6 +16,7 @@ const getApi = async () => {
         } else {
             const data = await res.json();
             const result = data.data;
+
             if (result.length === 0) {
                 alert("No Data Found")
             } else {
@@ -24,7 +25,7 @@ const getApi = async () => {
                     getItem(value);
                 }
             }
-            console.log(result.slice(0, 20));
+
         }
 
     }
@@ -32,7 +33,6 @@ const getApi = async () => {
 }
 
 const getItem = (result) => {
-    console.log(result)
 
     for (let data of result) {
 
@@ -79,7 +79,7 @@ const details = async (info) => {
 
 
 const getDetails = (id) => {
-    console.log(id)
+
     document.getElementById('name').innerText = id.name;
     document.getElementById('brand').innerText = id.brand;
     document.getElementById('displaySize').innerText = id.mainFeatures.displaySize;
@@ -94,5 +94,6 @@ const getDetails = (id) => {
 
 //error alert
 const alert = (message) => {
+    document.getElementById('alert-box').style.display = "block";
     document.getElementById('alert-msg').innerText = message;
 }
